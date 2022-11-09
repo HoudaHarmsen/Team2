@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static InputManager;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Car_Controller : Vehicle
@@ -17,12 +16,12 @@ public class Car_Controller : Vehicle
         var xAxis = Input.GetAxis("Horizontal");
         var yAxis = Input.GetAxis("Vertical");
 
-        float absYAxis = yAxis < 0 ? -yAxis : yAxis;
+        var abs = yAxis < 0 ? -yAxis : yAxis;
 
         velocity = transform.InverseTransformDirection(_rigidbody.velocity).z;
         smoothX = Mathf.SmoothDamp(smoothX, xAxis, ref velocityX, 0.12f);
 
-        float motorTorque = torqueSpeedCurve.Evaluate(Mathf.Abs(velocity * 0.02f)) * Speed;
+        var motorTorque = torqueSpeedCurve.Evaluate(Mathf.Abs(velocity * 0.02f)) * Speed;
 
         foreach (var w in listWheels)
         {
